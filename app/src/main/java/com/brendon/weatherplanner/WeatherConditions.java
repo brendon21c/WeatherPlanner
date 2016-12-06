@@ -50,7 +50,7 @@ public class WeatherConditions {
 
         private String history_url;
 
-        private String estimated;
+       // private String estimated;
 
         private String weather;
 
@@ -206,16 +206,6 @@ public class WeatherConditions {
         public void setHistory_url (String history_url)
         {
             this.history_url = history_url;
-        }
-
-        public String getEstimated ()
-        {
-            return estimated;
-        }
-
-        public void setEstimated (String estimated)
-        {
-            this.estimated = estimated;
         }
 
         public String getWeather ()
@@ -701,7 +691,7 @@ public class WeatherConditions {
         @Override
         public String toString()
         {
-            return "ClassPojo [wind_gust_mph = "+wind_gust_mph+", precip_1hr_metric = "+precip_1hr_metric+", precip_today_metric = "+precip_today_metric+", pressure_trend = "+pressure_trend+", forecast_url = "+forecast_url+", history_url = "+history_url+", estimated = "+estimated+", weather = "+weather+", windchill_string = "+windchill_string+", station_id = "+station_id+", UV = "+UV+", observation_epoch = "+observation_epoch+", wind_gust_kph = "+wind_gust_kph+", precip_1hr_in = "+precip_1hr_in+", observation_time = "+observation_time+", feelslike_string = "+feelslike_string+", temp_f = "+temp_f+", local_tz_long = "+local_tz_long+", relative_humidity = "+relative_humidity+", temp_c = "+temp_c+", image = "+image+", solarradiation = "+solarradiation+", visibility_mi = "+visibility_mi+", observation_location = "+observation_location+", wind_mph = "+wind_mph+", heat_index_c = "+heat_index_c+", precip_today_string = "+precip_today_string+", observation_time_rfc822 = "+observation_time_rfc822+", feelslike_f = "+feelslike_f+", heat_index_f = "+heat_index_f+", feelslike_c = "+feelslike_c+", heat_index_string = "+heat_index_string+", ob_url = "+ob_url+", dewpoint_string = "+dewpoint_string+", local_tz_offset = "+local_tz_offset+", wind_kph = "+wind_kph+", windchill_f = "+windchill_f+", windchill_c = "+windchill_c+", wind_degrees = "+wind_degrees+", pressure_in = "+pressure_in+", dewpoint_c = "+dewpoint_c+", pressure_mb = "+pressure_mb+", icon = "+icon+", local_time_rfc822 = "+local_time_rfc822+", precip_1hr_string = "+precip_1hr_string+", icon_url = "+icon_url+", wind_dir = "+wind_dir+", dewpoint_f = "+dewpoint_f+", display_location = "+display_location+", visibility_km = "+visibility_km+", temperature_string = "+temperature_string+", local_tz_short = "+local_tz_short+", local_epoch = "+local_epoch+", wind_string = "+wind_string+", precip_today_in = "+precip_today_in+"]";
+            return "ClassPojo [wind_gust_mph = "+wind_gust_mph+", precip_1hr_metric = "+precip_1hr_metric+", precip_today_metric = "+precip_today_metric+", pressure_trend = "+pressure_trend+", forecast_url = "+forecast_url+", history_url = "+history_url+", weather = "+weather+", windchill_string = "+windchill_string+", station_id = "+station_id+", UV = "+UV+", observation_epoch = "+observation_epoch+", wind_gust_kph = "+wind_gust_kph+", precip_1hr_in = "+precip_1hr_in+", observation_time = "+observation_time+", feelslike_string = "+feelslike_string+", temp_f = "+temp_f+", local_tz_long = "+local_tz_long+", relative_humidity = "+relative_humidity+", temp_c = "+temp_c+", image = "+image+", solarradiation = "+solarradiation+", visibility_mi = "+visibility_mi+", observation_location = "+observation_location+", wind_mph = "+wind_mph+", heat_index_c = "+heat_index_c+", precip_today_string = "+precip_today_string+", observation_time_rfc822 = "+observation_time_rfc822+", feelslike_f = "+feelslike_f+", heat_index_f = "+heat_index_f+", feelslike_c = "+feelslike_c+", heat_index_string = "+heat_index_string+", ob_url = "+ob_url+", dewpoint_string = "+dewpoint_string+", local_tz_offset = "+local_tz_offset+", wind_kph = "+wind_kph+", windchill_f = "+windchill_f+", windchill_c = "+windchill_c+", wind_degrees = "+wind_degrees+", pressure_in = "+pressure_in+", dewpoint_c = "+dewpoint_c+", pressure_mb = "+pressure_mb+", icon = "+icon+", local_time_rfc822 = "+local_time_rfc822+", precip_1hr_string = "+precip_1hr_string+", icon_url = "+icon_url+", wind_dir = "+wind_dir+", dewpoint_f = "+dewpoint_f+", display_location = "+display_location+", visibility_km = "+visibility_km+", temperature_string = "+temperature_string+", local_tz_short = "+local_tz_short+", local_epoch = "+local_epoch+", wind_string = "+wind_string+", precip_today_in = "+precip_today_in+"]";
         }
     }
 

@@ -142,14 +142,28 @@ public class DaysOfWeek extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if (mWeatherKey != null) {
+                String selectionDay = daysOfWeek_LV.getItemAtPosition(position).toString();
 
-                    getCurrentTemp();
+                // gets the current weather if selection is the current day.
+                if (selectionDay.equalsIgnoreCase(mUserDay)) {
 
-                } else {
+                    if (mWeatherKey != null) {
 
-                    Toast.makeText(DaysOfWeek.this, "Problem reading weather key", Toast.LENGTH_LONG).show();
+                        getCurrentTemp();
+
+                    } else {
+
+                        Toast.makeText(DaysOfWeek.this, "Problem reading weather key", Toast.LENGTH_LONG).show();
+                    }
                 }
+
+                else {
+
+                    Toast.makeText(DaysOfWeek.this, "Need to build class for forecast", Toast.LENGTH_SHORT).show();
+                }
+
+
+
             }
         });
 
@@ -232,7 +246,7 @@ public class DaysOfWeek extends AppCompatActivity {
 
                 String temp_f = observation.getTemp_f();
 
-                mWeatherDisplay.setText(temp_f);
+                mWeatherDisplay.setText("The current temp is : " + temp_f);
             }
 
         }

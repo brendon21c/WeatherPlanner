@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String city = mUserCityEntry.getText().toString();
+                String city = mUserCityEntry.getText().toString().trim();
 
                 mUserCityLocation = city;
 
