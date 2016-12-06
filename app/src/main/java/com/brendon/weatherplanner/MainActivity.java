@@ -1,6 +1,9 @@
 package com.brendon.weatherplanner;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -12,16 +15,27 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
 
     GPSTracker mGPSTracker;
+    Geocoder mGeocoder;
 
     TextView mUserInstructions;
     Button mUserLocationButton;
     EditText mUserCityEntry;
     Button mSelectCity;
     Button mLaunchWeatherButton;
+
+    private String mUserCityLocation;
+    private String mDayOfWeek;
+
+    private static final String LOCATION_TAG = "location";
 
 
     int REQUEST_LOCATION_PERMISSION = 0;
@@ -42,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         checkUserPermission();
 
         setup();
+
+        mGeocoder = new Geocoder(this, Locale.getDefault()); // Geocoder to get user's current city.
 
 
 
@@ -77,12 +93,35 @@ public class MainActivity extends AppCompatActivity {
                     double latitude = mGPSTracker.getLatitude();
                     double longitude = mGPSTracker.getLongitude();
 
-                    Toast.makeText(MainActivity.this, "Your current location is this, Lat: " + latitude +
-                            ", Lon: " + longitude, Toast.LENGTH_LONG).show();
+                    try {
+
+                        List<Address> locationList = mGeocoder.getFromLocation(latitude,longitude,1);
+
+                        mUserCityLocation = locationList.get(0).getLocality();
+
+                        mUserCityEntry.setText(mUserCityLocation);
+
+                    } catch (Exception e) {
+
+                        e.printStackTrace();
+
+                    }
+
                 }
 
             }
 
+        });
+
+        mSelectCity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String city = mUserCityEntry.getText().toString();
+
+                mUserCityLocation = city;
+
+            }
         });
 
         mUserCityEntry.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +129,76 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 mUserCityEntry.setText("");
+
+            }
+        });
+
+
+        mLaunchWeatherButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Calendar currentDay = Calendar.getInstance();
+
+                int day = currentDay.get(Calendar.DAY_OF_WEEK);
+
+                // Sets the day of the week.
+                switch (day) {
+
+                    case Calendar.SUNDAY:
+
+                        mDayOfWeek = "sunday";
+                        break;
+
+                    case Calendar.MONDAY:
+
+                        mDayOfWeek = "monday";
+                        break;
+
+
+                    case Calendar.TUESDAY:
+
+                        mDayOfWeek = "tuesday";
+                        break;
+
+                    case Calendar.WEDNESDAY:
+
+                        mDayOfWeek = "wednesday";
+                        break;
+
+
+                    case Calendar.THURSDAY:
+
+                        mDayOfWeek = "thursday";
+                        break;
+
+
+                    case Calendar.FRIDAY:
+
+                        mDayOfWeek = "friday";
+                        break;
+
+
+                    case Calendar.SATURDAY:
+
+                        mDayOfWeek = "saturday";
+                        break;
+
+
+
+                }
+
+                // Adds the users location and day of the week to be passed to next activity.
+                ArrayList userList = new ArrayList();
+
+                userList.add(mDayOfWeek);
+                userList.add(mUserCityLocation);
+
+
+                Intent intent = new Intent(MainActivity.this, DaysOfWeek.class);
+                intent.putParcelableArrayListExtra("user", userList);
+
+                startActivity(intent);
 
             }
         });
