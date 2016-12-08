@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
                 if (mGPSTracker.CanGetLocation()) {
 
                     double latitude = mGPSTracker.getLatitude();
@@ -97,9 +96,12 @@ public class MainActivity extends AppCompatActivity {
 
                         List<Address> locationList = mGeocoder.getFromLocation(latitude,longitude,1);
 
-                        mUserCityLocation = locationList.get(0).getLocality();
+                        String temp = locationList.get(0).getLocality();
 
-                        mUserCityEntry.setText(mUserCityLocation);
+                        mUserCityLocation = temp.replace(" ", "_");
+
+                        mUserCityEntry.setText(temp);
+
 
                     } catch (Exception e) {
 
@@ -117,9 +119,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String city = mUserCityEntry.getText().toString().trim();
+                String city = mUserCityEntry.getText().toString();
 
-                mUserCityLocation = city;
+                mUserCityLocation = city.replaceAll("\\s", "");
 
             }
         });

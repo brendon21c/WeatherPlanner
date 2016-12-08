@@ -30,6 +30,8 @@ public class DaysOfWeek extends AppCompatActivity {
     private String mWeatherKey;
 
     private static final String WEATHER_TAG = "weather";
+    private static final String FORECAST_TAG = "forecast";
+
 
     private ArrayList<String> mDaysOfWeek;
 
@@ -159,7 +161,8 @@ public class DaysOfWeek extends AppCompatActivity {
 
                 else {
 
-                    Toast.makeText(DaysOfWeek.this, "Need to build class for forecast", Toast.LENGTH_SHORT).show();
+                    getForecast();
+                    //Toast.makeText(DaysOfWeek.this, "Need to build class for forecast", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -251,6 +254,87 @@ public class DaysOfWeek extends AppCompatActivity {
 
         }
     }
+
+
+    private void getForecast() {
+
+        String tempUrl = "http://api.wunderground.com/api/%s/forecast/q/MN/%s.json"; //TODO pull user state
+
+        String url = String.format(tempUrl, mWeatherKey, mUserCity);
+
+        RequestForecast temp = new RequestForecast();
+
+        temp.execute(url);
+
+
+    }
+
+    private class RequestForecast extends AsyncTask<String, Void, WeatherForecast.Forecast> {
+
+        @Override
+        protected WeatherForecast.Forecast doInBackground(String... urls) {
+
+            try {
+
+                URL url = new URL(urls[0]);
+
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                InputStream responseStream = connection.getInputStream();
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseStream));
+
+                StringBuilder builder = new StringBuilder();
+
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    builder.append(line);
+                }
+
+                String responseString = builder.toString();
+
+                Log.d(FORECAST_TAG, responseString);
+
+                Gson gson = new GsonBuilder().create();
+
+                WeatherForecast forecast = gson.fromJson(responseString, WeatherForecast.class);
+
+                if (forecast.getResponse().getError() != null) {
+
+                    Log.d(FORECAST_TAG, forecast.getResponse().getError().getMessage());
+                    return null;
+
+                }
+
+                return forecast.getForecast();
+
+
+            } catch (Exception e) {
+
+                Log.d(FORECAST_TAG, "Error getting forecast", e);
+                return null;
+
+            }
+        }
+
+        //TODO I cannot figure out how to pull the forecast information from the search results.
+        protected void onPostExecute(WeatherForecast.Forecast forecast) {
+
+            if (forecast != null) {
+
+
+                WeatherForecast.Simpleforecast forecastText = forecast.getSimpleforecast();
+
+                WeatherForecast.Forecastday[] forecastday = forecastText.getForecastday();
+
+                mWeatherDisplay.setText(forecastText.toString());
+
+            }
+
+        }
+
+    }
+
 
 
 

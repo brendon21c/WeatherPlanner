@@ -25,8 +25,6 @@ public class WeatherKey {
             return null;
         }
 
-        //TODO - how would you deal with a situation with 4 keys?
-        // TODO how could you structure the file?
 
     }
 
