@@ -14,10 +14,15 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/instructions_viewer"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:padding="15dp"
         android:layout_alignParentTop="true">
 
+        <TextView
+            android:text="Here is your list for the next 3 days. Select one to see the weather forecast, then select an activity button that suits your mood."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/instructions_text"/>
     </RelativeLayout>
 
     <RelativeLayout

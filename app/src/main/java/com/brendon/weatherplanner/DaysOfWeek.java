@@ -32,6 +32,11 @@ public class DaysOfWeek extends AppCompatActivity {
     private static final String WEATHER_TAG = "weather";
     private static final String FORECAST_TAG = "forecast";
 
+    private String mForecastHigh;
+    private String mForecastLow;
+    private String mForecastSummary;
+    private String mDaySelection;
+
 
     private ArrayList<String> mDaysOfWeek;
 
@@ -144,10 +149,10 @@ public class DaysOfWeek extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String selectionDay = daysOfWeek_LV.getItemAtPosition(position).toString();
+                mDaySelection = daysOfWeek_LV.getItemAtPosition(position).toString();
 
                 // gets the current weather if selection is the current day.
-                if (selectionDay.equalsIgnoreCase(mUserDay)) {
+                if (mDaySelection.equalsIgnoreCase(mUserDay)) {
 
                     if (mWeatherKey != null) {
 
@@ -161,8 +166,15 @@ public class DaysOfWeek extends AppCompatActivity {
 
                 else {
 
-                    getForecast();
-                    //Toast.makeText(DaysOfWeek.this, "Need to build class for forecast", Toast.LENGTH_SHORT).show();
+                    if (mWeatherKey != null) {
+
+                        getForecast();
+
+                    } else {
+
+                        Toast.makeText(DaysOfWeek.this, "Problem reading weather key", Toast.LENGTH_LONG).show();
+                    }
+
                 }
 
 
@@ -172,6 +184,7 @@ public class DaysOfWeek extends AppCompatActivity {
 
     }
 
+    // Gets the current temp and summary for the User.
     private void getCurrentTemp() {
 
         String tempUrl = "http://api.wunderground.com/api/%s/conditions/q/MN/%s.json"; //TODO pull user state
@@ -249,13 +262,16 @@ public class DaysOfWeek extends AppCompatActivity {
 
                 String temp_f = observation.getTemp_f();
 
-                mWeatherDisplay.setText("The current temp is : " + temp_f);
+                String summary = observation.getWeather();
+
+                mWeatherDisplay.setText("The current temp is : " + temp_f + "\n" + "Summary: " + summary);
             }
 
         }
     }
 
 
+    // Gets the high, low and summary forecast for User.
     private void getForecast() {
 
         String tempUrl = "http://api.wunderground.com/api/%s/forecast/q/MN/%s.json"; //TODO pull user state
@@ -317,17 +333,37 @@ public class DaysOfWeek extends AppCompatActivity {
             }
         }
 
-        //TODO I cannot figure out how to pull the forecast information from the search results.
         protected void onPostExecute(WeatherForecast.Forecast forecast) {
 
             if (forecast != null) {
-
 
                 WeatherForecast.Simpleforecast forecastText = forecast.getSimpleforecast();
 
                 WeatherForecast.Forecastday[] forecastday = forecastText.getForecastday();
 
-                mWeatherDisplay.setText(forecastText.toString());
+
+                for (WeatherForecast.Forecastday day : forecastday) {
+
+                    String dayTemp = day.getDate().getWeekday();
+
+                    // If the current day in the loop matches the Users selection.
+                    if (dayTemp.equalsIgnoreCase(mDaySelection)) {
+
+                        mForecastHigh = day.getHigh().getFahrenheit();
+
+                        mForecastLow = day.getLow().getFahrenheit();
+
+                        mForecastSummary = day.getConditions();
+
+                        mWeatherDisplay.setText("High: " + mForecastHigh + "\n" +
+                        "Low: " + mForecastLow + "\n" + "Summary: " + mForecastSummary);
+
+                        break;
+
+                    }
+
+
+                }
 
             }
 
