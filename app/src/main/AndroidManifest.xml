@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".DaysOfWeek">
         </activity>
+        <activity android:name=".YelpResult">
+        </activity>
     </application>
 
 </manifest>

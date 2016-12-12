@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ public class DaysOfWeek extends AppCompatActivity {
     private String mUserCity;
     private String mWeatherKey;
 
+
     private static final String WEATHER_TAG = "weather";
     private static final String FORECAST_TAG = "forecast";
 
@@ -44,6 +46,7 @@ public class DaysOfWeek extends AppCompatActivity {
 
     private ListView daysOfWeek_LV;
     private TextView mWeatherDisplay;
+    private Button mTestButton;
 
 
 
@@ -54,8 +57,10 @@ public class DaysOfWeek extends AppCompatActivity {
 
         daysOfWeek_LV = (ListView) findViewById(R.id.days_selection_list);
         mWeatherDisplay = (TextView) findViewById(R.id.weather_display);
+        mTestButton = (Button) findViewById(R.id.test_button);
 
         mWeatherKey = WeatherKey.getKeyFromRawResource(this, R.raw.weather_key); // Reads in weather key for API.
+
 
         setDaysOfWeek();
 
@@ -178,6 +183,18 @@ public class DaysOfWeek extends AppCompatActivity {
                 }
 
 
+
+            }
+        });
+
+        mTestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Intent intent = new Intent(DaysOfWeek.this, YelpResult.class);
+
+                startActivity(intent);
 
             }
         });
