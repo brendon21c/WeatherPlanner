@@ -26,7 +26,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/instructions_viewer"
         android:layout_above="@+id/bottom_layout">
@@ -39,20 +39,22 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:id="@+id/bottom_layout"
         android:layout_alignParentBottom="true"
         android:padding="15dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/weather_display"/>
 
         <Button
             android:text="Test"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/test_button"/>
+            android:id="@+id/test_button"
+            android:layout_below="@+id/weather_display"
+            android:layout_centerHorizontal="true"
+            android:layout_width="175dp"/>
     </RelativeLayout>
 </RelativeLayout>
